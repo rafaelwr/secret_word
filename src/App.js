@@ -18,12 +18,33 @@ const stages = [
   {id: 3, name: 'end'},
 ];
 
+const pickedCategoryAndWord = (words) => {
+  // Pick category
+  const categories = Object.keys(words[0]);
+  const pickedCategory = categories[Math.floor(Math.random() * categories.length)];
+
+  // Pick word
+  const wordsInCategory = words[0][pickedCategory];
+  const pickedWord = wordsInCategory[Math.floor(Math.random() * wordsInCategory.length)];
+
+  return { pickedCategory, pickedWord };
+}
+
 function App() {
   const [gameStage, setGameStage] = useState(stages[0].name);
-
   const words = useState(wordsList);
 
+  const [pickedCategory, setPickedCategory] = useState('');
+  const [pickedWord, setPickedWord] = useState('');
+  const [letters, setLetters] = useState('');
+
   const startGame = () => {
+    const { pickedCategory, pickedWord } = pickedCategoryAndWord(words);
+
+    // split letters
+    let wordLetters = pickedWord.split('');
+    wordLetters = wordLetters.map((l) => l.toLowerCase());
+
     setGameStage(stages[1].name);
   }
 
